@@ -43,7 +43,7 @@
               <?php echo $result["date_note"];?>
             </span>
           </h2>
-          <a onclick="this.parentElement.remove()">Delete</a>
+          <a onclick="location.href='../php/delete.php?this_note=<?= $result['id_note'] ;?>'">Delete</a>
         </div>
         <!-- <div class="note_card">
           <h2>Title : </span></h2>
@@ -70,7 +70,7 @@
           </div>
           <div class="buttons_note">
             <a href="update.php">Update</a>
-            <a href="delete.php">Delete</a>
+            <a onclick="location.href='../php/delete.php?this_note=<?= $result['id_note'] ;?>'">Delete</a>
           </div>
         </div>
       </div>
