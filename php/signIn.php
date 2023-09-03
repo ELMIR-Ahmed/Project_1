@@ -31,12 +31,6 @@
         <h2>New Account ?</h2>
         <div class="icons">
           <i class="fa-solid fa-user fa-xs"></i>
-          <input required placeholder="Your Id" type="text" name="id">
-        </div>
-        <br>
-        <br>
-        <div class="icons">
-          <i class="fa-solid fa-user fa-xs"></i>
           <input required placeholder="Username" type="text" name="username">
         </div>
         <br>

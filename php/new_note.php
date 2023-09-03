@@ -7,25 +7,30 @@
   <title>New Note</title>
 </head>
 <body>
+  <?php
+    session_start();
+  ?>
   <div class="container">
     <div class="user">
       <div class="profil">
         <img src="../img/téléchargement (1).jpeg" alt="">
       </div>
-      <h2><span class="UI">User :</span> <?php echo "Ahmed"; ?></h2>
+      <h2><span class="UI">User :</span> <?php echo $_SESSION["username"] ;?></h2>
       <br>
-      <h2><span class="UI">ID :</span>  <?php echo "2003"; ?></h2>
+      <h2><span class="UI">ID :</span>  <?php echo $_SESSION["id"] ;?></h2>
     </div>
     <div class="note_form">
-      <div class="note_title">
-        <input type="text" placeholder="Title..." name="title">
-      </div>
-      <div class="note_context">
-        <textarea name="note_context" placeholder="Write Your Note Here..."></textarea>
-      </div>
-      <div class="note_buttons">
-        <a href="note_page.php">ADD</a>
-      </div>
+      <form action="add_note.php" method="post">
+        <div class="note_title">
+          <input type="text" placeholder="Title..." name="title">
+        </div>
+        <div class="note_context">
+          <textarea name="note_context" placeholder="Write Your Note Here..."></textarea>
+        </div>
+        <div class="note_buttons">
+          <button type="submit">ADD</button>
+        </div>
+      </form>
     </div>
   </div>
 </body>

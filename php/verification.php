@@ -10,13 +10,17 @@
   $request->bindValue(2, $pass, PDO::PARAM_STR);
   $request->execute();
   $data = $request->fetch();
-  session_start();
-  if ($email == $data["email"] && $pass == $data["pass"]) {
-    session_start();
-    $_SESSION["email"] = $data["email"];
-    $_SESSION["Id"] = $data["id_users"];
-    header("location:note_page.php");
-  } else {
-    header("location:logIn.php");
+  // session_start();
+  if(!empty($_POST["email"]) && !empty($_POST["pass"])){
+    if ($email == $data["email"] && $pass == $data["pass"]) {
+      session_start();
+      $_SESSION["username"] = $data["username"];
+      $_SESSION["id"] = $data["id_users"];
+      header("location:note_page.php");
+    } else {
+      header("location:logIn.php");
+    }
+  }else {
+    header("location:logIn.php"); 
   }
 ?>

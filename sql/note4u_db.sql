@@ -21,11 +21,11 @@ USE `note4u` ;
 -- Table `note4u`.`users`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `note4u`.`users` (
-  `id_users` INT NOT NULL,
+  `id_users` INT NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `phone_number` VARCHAR(25) NULL DEFAULT NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `pass` VARCHAR(45) NOT NULL,
+  `phone_number` VARCHAR(25) NULL DEFAULT NULL UNIQUE,
+  `email` VARCHAR(100) NOT NULL,
+  `pass` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id_users`),
   UNIQUE INDEX `id_users_UNIQUE` (`id_users` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
@@ -39,8 +39,8 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `note4u`.`notes` (
   `id_note` INT NOT NULL AUTO_INCREMENT,
-  `title_note` VARCHAR(45) NOT NULL,
-  `context_note` VARCHAR(1000) NOT NULL,
+  `title_note` VARCHAR(100) NOT NULL,
+  `context_note` VARCHAR(10000) NOT NULL,
   `date_note` DATE NULL DEFAULT NULL,
   `id_users` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id_note`),
