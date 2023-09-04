@@ -12,8 +12,13 @@
     session_start();
     $username = $_SESSION["username"];
     $id = $_SESSION["id"];
+    $nbr_note = $_SESSION["nbr_notes"];
+    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 4;
+    $nextLimit = $limit + 4;
 
-    $sql = "SELECT * FROM notes WHERE id_users = ? order by id_note desc";
+    // $note_limit = 4;
+
+    $sql = "SELECT * FROM notes WHERE id_users = ? ORDER BY id_note DESC LIMIT $limit";
     $request = $connexion->prepare($sql);
     $request->bindValue(1, $id);
     $request->execute();
@@ -37,13 +42,13 @@
       <div class="article_n">
         <?php foreach ($results as $result) :?>
         <div class="note_card">
-          <h2 onclick="location.href='../php/afficher_note.php'" class="click_note">
+          <h2 onclick="location.href='../php/note_page.php?aff_note=<?=$result['id_note'];?>'" class="click_note">
             Title : <?php echo $result["title_note"];?> 
             <span class="date">
               <?php echo $result["date_note"];?>
             </span>
           </h2>
-          <a onclick="location.href='../php/delete.php?this_note=<?= $result['id_note'] ;?>'">Delete</a>
+          <a onclick="location.href='../php/delete.php?this_note=<?=$result['id_note'];?>'">Delete</a>
         </div>
         <!-- <div class="note_card">
           <h2>Title : </span></h2>
@@ -59,19 +64,29 @@
         </div> -->
         <?php endforeach; ?>
         <div class="see_more">
-          <a href="see_more.php">See More...</a>
+          <a href="note_page.php?limit=<?= $nextLimit; ?>">See More...</a>
         </div>
       </div>
       <div class="body_n">
         <div class="note">
-          <h2><?php echo "PHP";?></h2>
+          <?php if (isset($_GET["aff_note"]) && $_GET["aff_note"] <= $nbr_note):?>
+          <?php
+            $note_aff = $_GET["aff_note"];
+            $request_aff = "SELECT title_note, context_note FROM notes WHERE id_note = ?";
+            $stmt = $connexion->prepare($request_aff);
+            $stmt->bindValue(1, $note_aff);
+            $stmt->execute();
+            $data_note = $stmt->fetch();
+          ?>
+          <h2><?= $data_note["title_note"]; ?></h2>
           <div class="container_p">
-            <textarea disabled class="note_text" ><?php echo "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest";?></textarea>
+            <textarea disabled class="note_text" ><?= $data_note["context_note"] ;?></textarea>
           </div>
           <div class="buttons_note">
             <a href="update.php">Update</a>
             <a onclick="location.href='../php/delete.php?this_note=<?= $result['id_note'] ;?>'">Delete</a>
           </div>
+          <?php endif;?>
         </div>
       </div>
     </div>
