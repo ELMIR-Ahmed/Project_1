@@ -6,13 +6,14 @@
   <link rel="stylesheet" href="../css/note_page.css">
   <title>Note | page</title>
 </head>
-<body style="background-color: gray;">
+<body>
   <?php
     require_once "./connexion_DB.php";
     session_start();
     $username = $_SESSION["username"];
     $id = $_SESSION["id"];
-    $nbr_note = $_SESSION["nbr_notes"];
+    $last_note = $_SESSION["max_note"];
+    $first_note = $_SESSION["min_note"];
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 4;
     $nextLimit = $limit + 4;
 
@@ -69,10 +70,10 @@
       </div>
       <div class="body_n">
         <div class="note">
-          <?php if (isset($_GET["aff_note"]) && $_GET["aff_note"] <= $nbr_note):?>
+          <?php if (isset($_GET["aff_note"]) && ($_GET["aff_note"] <= $last_note) && ($_GET["aff_note"] >= $first_note)):?>
           <?php
             $note_aff = $_GET["aff_note"];
-            $request_aff = "SELECT title_note, context_note FROM notes WHERE id_note = ?";
+            $request_aff = "SELECT id_note, title_note, context_note FROM notes WHERE id_note = ?";
             $stmt = $connexion->prepare($request_aff);
             $stmt->bindValue(1, $note_aff);
             $stmt->execute();
@@ -83,8 +84,8 @@
             <textarea disabled class="note_text" ><?= $data_note["context_note"] ;?></textarea>
           </div>
           <div class="buttons_note">
-            <a href="update.php">Update</a>
-            <a onclick="location.href='../php/delete.php?this_note=<?= $result['id_note'] ;?>'">Delete</a>
+            <a href="update_note.php?curr_note=<?= $data_note["id_note"] ;?>">Update</a>
+            <a onclick="location.href='../php/delete.php?this_note=<?= $result['id_note'] ;?>'">Delete</a> <!-- a corriger !!! -->
           </div>
           <?php endif;?>
         </div>

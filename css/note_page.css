@@ -9,6 +9,9 @@
   padding: 0;
   box-sizing: border-box;
 }
+body{
+  background-color: var(--primary-color);
+}
 .notes{
   display: flex;
 }
@@ -73,7 +76,7 @@
   margin-bottom: auto;
 }
 .article_n{
-  height: 75vh;
+  /* height: 75vh; */
   width: 40%;
   background-color: var(--primary-color);
   display: flex;
@@ -88,6 +91,7 @@
   box-shadow: 4px 4px 3px gray;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 15px;
 }
 .article_n .note_card h2{
   border: 2px solid rgb(255, 255, 255);
@@ -101,11 +105,13 @@
   line-height: 2;
   padding-left: 10px;
   font-family: cursive;
-  transition-property: transform;
+  transition-property: background-color, color;
   transition-duration: 0.3s;
 }
 .article_n .note_card h2:hover{
-  transform: scale(0.97);
+  cursor: pointer;
+  background-color: rgb(38, 145, 143);
+  color: black;
 }
 
 .article_n .note_card a{
@@ -128,6 +134,7 @@
 }
 .article_n .note_card a:hover{
   transform: scale(0.9) ;
+  cursor: pointer;
 }
 /* .article_n .note_card:hover{
   cursor: pointer;
@@ -192,7 +199,8 @@
   transition: transform 0.3s;
 }
 .body_n .note .buttons_note a:hover{
-  transform: scale(0.9) ;
+  transform: scale(0.9);
+  cursor: pointer;
 }
 .body_n .note .buttons_note a:first-child{
   background-color: green;
@@ -201,8 +209,10 @@
   background-color: red;
 }
 .date{
-  font-size: small;
-  margin-left: 33%;
+  position: absolute;
+  line-height: 5;
+  left: 290px;
+  font-size: x-small;
   font-style: italic;
   font-weight: 100;
   color: var(--secondary-color);
