@@ -2,6 +2,9 @@
   --primary-color: rgb(110,110,110);
   --secondary-color: rgb(186,255,57);
   --third-color: rgb(44, 169, 167);
+  /* --primray-color: rgb(212, 212, 212);
+  --secondary-color: rgb(11, 211, 247);
+  --third-color: rgb(28, 119, 185); */
 }
 
 *{
@@ -81,6 +84,7 @@ body{
   background-color: var(--primary-color);
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 .article_n .note_card{
@@ -91,6 +95,7 @@ body{
   box-shadow: 4px 4px 3px gray;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   margin-bottom: 15px;
 }
 .article_n .note_card h2{

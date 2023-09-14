@@ -12,8 +12,6 @@
     session_start();
     $username = $_SESSION["username"];
     $id = $_SESSION["id"];
-    $last_note = $_SESSION["max_note"];
-    $first_note = $_SESSION["min_note"];
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 4;
     $nextLimit = $limit + 4;
 
@@ -70,7 +68,6 @@
       </div>
       <div class="body_n">
         <div class="note">
-          <?php if (isset($_GET["aff_note"]) && ($_GET["aff_note"] <= $last_note) && ($_GET["aff_note"] >= $first_note)):?>
           <?php
             $note_aff = $_GET["aff_note"];
             $request_aff = "SELECT id_note, title_note, context_note FROM notes WHERE id_note = ?";
@@ -79,15 +76,19 @@
             $stmt->execute();
             $data_note = $stmt->fetch();
           ?>
-          <h2><?= $data_note["title_note"]; ?></h2>
+          <?php 
+            $title = $data_note ? $data_note['title_note'] : 'no title';
+            $content = $data_note ? $data_note['context_note'] : 'no content';
+            $noteId = $data_note ? $data_note['id_note'] : -1;
+          ?>
+          <h2><?= $title; ?></h2>
           <div class="container_p">
-            <textarea disabled class="note_text" ><?= $data_note["context_note"] ;?></textarea>
+            <textarea disabled class="note_text" ><?=$content;?></textarea>
           </div>
           <div class="buttons_note">
             <a href="update_note.php?curr_note=<?= $data_note["id_note"] ;?>">Update</a>
             <a onclick="location.href='../php/delete.php?this_note=<?= $result['id_note'] ;?>'">Delete</a> <!-- a corriger !!! -->
           </div>
-          <?php endif;?>
         </div>
       </div>
     </div>
