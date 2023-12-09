@@ -43,9 +43,9 @@
         <div class="note_card">
           <h2 onclick="location.href='../php/note_page.php?aff_note=<?=$result['id_note'];?>'" class="click_note">
             Title : <?php echo $result["title_note"];?> 
-            <span class="date">
+            <div class="date">
               <?php echo $result["date_note"];?>
-            </span>
+            </div>
           </h2>
           <a onclick="location.href='../php/delete.php?this_note=<?=$result['id_note'];?>'">Delete</a>
         </div>
@@ -56,7 +56,7 @@
         <div class="note_card">
           <h2>Title : </span></h2>
           <a href="delete_note.php">Delete</a>
-        </div>
+        </div> 
         <div class="note_card">
           <h2>Title : </span></h2>
           <a href="delete_note.php">Delete</a>
@@ -69,12 +69,15 @@
       <div class="body_n">
         <div class="note">
           <?php
-            $note_aff = $_GET["aff_note"];
-            $request_aff = "SELECT id_note, title_note, context_note FROM notes WHERE id_note = ?";
-            $stmt = $connexion->prepare($request_aff);
-            $stmt->bindValue(1, $note_aff);
-            $stmt->execute();
-            $data_note = $stmt->fetch();
+            $note_aff = isset($_GET["aff_note"]) ? $_GET["aff_note"] : false;
+            $data_note = ['title_note' => 'title', 'context_note' =>'context', 'id_note' => 1];
+            if ($note_aff != false ) {
+              $request_aff = "SELECT id_note, title_note, context_note FROM notes WHERE id_note = ?";
+              $stmt = $connexion->prepare($request_aff);
+              $stmt->bindValue(1, $note_aff);
+              $stmt->execute();
+              $data_note = $stmt->fetch();
+            }
           ?>
           <?php 
             $title = $data_note ? $data_note['title_note'] : 'no title';
